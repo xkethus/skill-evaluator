@@ -25,4 +25,24 @@ db.serialize(() => {
     });
 });
 
+
+db.serialize(() => {
+    // Crear tabla de microskills
+    db.run(`
+        CREATE TABLE IF NOT EXISTS microskills (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            level INTEGER NOT NULL CHECK(level BETWEEN 1 AND 4),
+            skill_id INTEGER NOT NULL,
+            FOREIGN KEY (skill_id) REFERENCES skills(id)
+        )
+    `, (err) => {
+        if (err) {
+            console.error('Error al crear la tabla de microskills:', err.message);
+        } else {
+            console.log('Tabla microskills creada o ya existe.');
+        }
+    });
+});
+
 module.exports = db;
