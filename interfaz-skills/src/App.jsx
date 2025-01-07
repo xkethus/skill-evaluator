@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./index.css";
 
-const API_BASE_URL = "https://tu-backend-desplegado.onrender.com/api";
+const API_BASE_URL = "https://skill-evaluator.onrender.com/api/skills-with-microskills";
 
 function App() {
     const [habilidades, setHabilidades] = useState([]);
