@@ -1,5 +1,27 @@
+# Node.js dependencies
 node_modules/
+
+# Environment variables
 *.env
+
+# SQLite database files
 *.sqlite
+
+# Logs
 *.log
 
+# OS-generated files
+.DS_Store
+
+# Build outputs
+dist/
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# Vite-specific files
+.vite/
+
+# Local development config
+vite.config.local.js

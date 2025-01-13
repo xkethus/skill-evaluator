@@ -1,5 +1,4 @@
 const db = require('../database');
-
 // Obtener todas las habilidades
 const getSkills = (req, res) => {
     db.all('SELECT * FROM skills', (err, rows) => {
@@ -14,7 +13,7 @@ const getSkills = (req, res) => {
 // Obtener todas las habilidades con sus microskills
 const getSkillsWithMicroskills = (req, res) => {
     db.all(
-        `SELECT skills.id as skill_id, skills.name as skill_name, microskills.id as microskill_id, microskills.name as microskill_name
+        `SELECT skills.id as skill_id, skills.name as skill_name, microskills.id as microskill_id, microskills.name as microskill_name, microskills.level
          FROM skills LEFT JOIN microskills ON skills.id = microskills.skill_id`,
         (err, rows) => {
             if (err) {
@@ -33,7 +32,8 @@ const getSkillsWithMicroskills = (req, res) => {
                     if (row.microskill_id) {
                         skill.microskills.push({
                             id: row.microskill_id,
-                            name: row.microskill_name
+                            name: row.microskill_name,
+                            level: row.level
                         });
                     }
                     return acc;
@@ -112,70 +112,41 @@ const getMicroskills = (req, res) => {
 // Agregar una subhabilidad a una habilidad específica
 const addMicroskill = (req, res) => {
     const skillId = req.params.skillId;
-    const { name } = req.body;
+    const { name, level } = req.body;
 
-    console.log("Datos recibidos en el backend:", { skillId, name });
-
-    if (!name) {
-        return res.status(400).json({ message: "El nombre de la subhabilidad es obligatorio" });
+    if (!name || !level || level < 1 || level > 4) {
+        return res.status(400).json({ message: 'Nombre o nivel inválido. El nivel debe estar entre 1 y 4.' });
     }
 
-    db.run('INSERT INTO microskills (name, skill_id) VALUES (?, ?)', [name, skillId], function (err) {
+    db.run('INSERT INTO microskills (name, level, skill_id) VALUES (?, ?, ?)', [name, level, skillId], function (err) {
         if (err) {
-            console.error("Error al agregar la subhabilidad:", err.message);
-            return res.status(500).json({ message: "Error al agregar la subhabilidad", error: err.message });
+            res.status(500).json({ message: 'Error al agregar la subhabilidad', error: err.message });
+        } else {
+            res.status(201).json({ id: this.lastID, message: 'Subhabilidad creada con éxito' });
         }
-
-        const microskillId = this.lastID;
-        console.log("Subhabilidad creada con ID:", microskillId);
-
-        const niveles = [1, 2, 3, 4];
-        const nivelQueries = niveles.map((nivel) => {
-            return new Promise((resolve, reject) => {
-                db.run(
-                    'INSERT INTO microskill_levels (microskill_id, level) VALUES (?, ?)',
-                    [microskillId, nivel],
-                    (err) => {
-                        if (err) reject(err);
-                        else resolve();
-                    }
-                );
-            });
-        });
-
-        Promise.all(nivelQueries)
-            .then(() => {
-                console.log("Niveles creados para la subhabilidad:", microskillId);
-                res.status(201).json({ id: microskillId, message: "Subhabilidad y niveles creados con éxito" });
-            })
-            .catch((error) => {
-                console.error("Error al crear los niveles:", error.message);
-                res.status(500).json({ message: "Error al crear los niveles de la subhabilidad", error: error.message });
-            });
     });
 };
-
 
 // Editar una subhabilidad específica
 const editMicroskill = (req, res) => {
     const skillId = parseInt(req.params.skillId, 10);
     const microskillId = parseInt(req.params.microskillId, 10);
-    const { name } = req.body;
+    const { name, level } = req.body;
 
-    if (!name) {
-        return res.status(400).json({ message: 'El nombre de la subhabilidad es obligatorio' });
+    if (!name || !level || level < 1 || level > 4) {
+        return res.status(400).json({ message: 'Nombre o nivel inválido. El nivel debe estar entre 1 y 4.' });
     }
 
     db.run(
-        'UPDATE microskills SET name = ? WHERE id = ? AND skill_id = ?',
-        [name, microskillId, skillId],
+        'UPDATE microskills SET name = ?, level = ? WHERE id = ? AND skill_id = ?',
+        [name, level, microskillId, skillId],
         function (err) {
             if (err) {
-                res.status(500).json({ message: 'Error al editar la subhabilidad', error: err.message });
+                res.status(500).json({ message: 'Error al editar el microskill', error: err.message });
             } else if (this.changes === 0) {
-                res.status(404).json({ message: 'Subhabilidad no encontrada' });
+                res.status(404).json({ message: 'Microskill no encontrado' });
             } else {
-                res.json({ message: `Subhabilidad con ID ${microskillId} actualizada con éxito` });
+                res.json({ message: `Microskill con ID ${microskillId} actualizado con éxito` });
             }
         }
     );
@@ -191,11 +162,11 @@ const deleteMicroskill = (req, res) => {
         [microskillId, skillId],
         function (err) {
             if (err) {
-                res.status(500).json({ message: 'Error al eliminar la subhabilidad', error: err.message });
+                res.status(500).json({ message: 'Error al eliminar el microskill', error: err.message });
             } else if (this.changes === 0) {
-                res.status(404).json({ message: 'Subhabilidad no encontrada' });
+                res.status(404).json({ message: 'Microskill no encontrado' });
             } else {
-                res.json({ message: `Subhabilidad con ID ${microskillId} eliminada con éxito` });
+                res.json({ message: `Microskill con ID ${microskillId} eliminado con éxito` });
             }
         }
     );

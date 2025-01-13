@@ -9,7 +9,7 @@ const db = new sqlite3.Database('./skills.db', (err) => {
     }
 });
 
-// Crear la tabla de skills si no existe
+// Crear la tabla si no existe
 db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS skills (
@@ -18,15 +18,16 @@ db.serialize(() => {
         )
     `, (err) => {
         if (err) {
-            console.error('Error al crear la tabla de skills:', err.message);
+            console.error('Error al crear la tabla:', err.message);
         } else {
             console.log('Tabla skills creada o ya existe.');
         }
     });
 });
 
-// Crear la tabla de microskills
+
 db.serialize(() => {
+    // Crear tabla de microskills
     db.run(`
         CREATE TABLE IF NOT EXISTS microskills (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,24 +41,6 @@ db.serialize(() => {
             console.error('Error al crear la tabla de microskills:', err.message);
         } else {
             console.log('Tabla microskills creada o ya existe.');
-        }
-    });
-});
-
-// Crear la tabla de niveles de microskills
-db.serialize(() => {
-    db.run(`
-        CREATE TABLE IF NOT EXISTS microskill_levels (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            microskill_id INTEGER NOT NULL,
-            level INTEGER NOT NULL,
-            FOREIGN KEY (microskill_id) REFERENCES microskills(id)
-        )
-    `, (err) => {
-        if (err) {
-            console.error('Error al crear la tabla de niveles de microskills:', err.message);
-        } else {
-            console.log('Tabla microskill_levels creada o ya existe.');
         }
     });
 });

@@ -1,19 +1,19 @@
 /* Variables globales */
 :root {
-  font-family: Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color: #333; /* Texto principal */
-  background-color: #f4f4f9; /* Fondo claro */
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  background-color: #f4f4f9; /* Fondo claro */
+  color: #333; /* Texto principal */
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
 }
 
 /* Enlaces */
 a {
-  font-weight: 500;
   color: #007BFF;
+  font-weight: 500;
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -23,145 +23,174 @@ a:hover {
 
 /* Estilos básicos para el cuerpo */
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #d4e7f5, #f7d9f7);
   color: #333;
+  display: flex;
+  font-family: Arial, sans-serif;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+  padding: 0;
   text-align: center;
-}
-
-
-/* Contenedor principal */
-.container {
-  background-color: #ffffff73;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  width: 100%;
 }
 
 /* Botones */
 button {
   background-color: #007BFF;
-  color: white;
   border: none;
   border-radius: 8px;
+  color: white;
   cursor: pointer;
-  padding: 10px 20px;
   font-size: 1rem;
+  padding: 10px 20px;
   transition: background-color 0.3s ease;
 }
 button:hover {
   background-color: #0056b3;
 }
 button:focus {
-  outline: 2px solid #0056b3;
+  outline: 2px solid #6b4a6b;
+}
+
+/* Barra inferior fija sobre todo el contenido */
+.bottom-bar {
+  background: linear-gradient(135deg, #f06292, #f48fb1); /* Magenta y rosa pastel */
+
+  border-top: 1px solid #ddd;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  left: 0;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Botones dentro del menú */
+.bottom-bar button {
+  
+  background-color: #f7d9f7; /* Turquesa claro */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  height: 60px;
+  width: 60px;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+.bottom-bar button:hover {
+  background-color: #982f69; /* Violeta oscuro */
+  transform: scale(1.1);
+}
+
+/* Contenedor principal */
+.container {
+  background-color: #ffffff73;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  padding: 20px;
+  width: 100%;
 }
 
 /* Campos de entrada y select */
 input, select {
-  padding: 10px;
-  font-size: 1rem;
-  width: 100%;
+  background-color: rgb(255, 255, 255);
   border: 1px solid #ccc;
   border-radius: 5px;
-  outline: none;
-  transition: border-color 0.2s;
-  background-color: rgb(255, 255, 255);
   display: inline-block;
   font: inherit;
+  font-size: 1rem;
   line-height: 1.5em;
+  outline: none;
+  padding: 10px;
+  transition: border-color 0.2s;
+  width: 100%;
   -webkit-appearance: none;
-  
 }
 input:focus, select:focus {
   border-color: #13457b;
 }
 
-/* Títulos */
-h1, h2 {
-  margin-bottom: 20px;
-  color: var(--color);
-}
-
 /* Listas */
+li {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px 0;
+  padding: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+li:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
 ul {
   list-style: none;
   padding: 0;
 }
-li {
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-li:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+/* Títulos */
+h1, h2 {
+  color: var(--color);
+  margin-bottom: 20px;
 }
 
 /* Media queries para dispositivos móviles */
 @media (max-width: 768px) {
   .container {
-    padding: 15px;
     max-width: 90%;
+    padding: 15px;
   }
   button {
     width: 100%;
   }
 }
-.field-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
 
+/* Estilos adicionales */
+.field-wrapper {
+  align-items: center;
+  display: flex;
+  margin-bottom: 20px;
+  position: relative;
+}
 .field {
-  flex: 1;
-  font-size: 1rem;
-  font-family: "Instrument Sans", sans-serif;
-  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  flex: 1;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 1rem;
   outline: none;
+  padding: 15px;
   transition: border-color 0.2s;
 }
-
 .field:focus {
   border-color: #007BFF;
 }
-
 .field::placeholder {
   color: rgba(0, 0, 0, 0.5);
 }
 
 .sign {
-  position: absolute;
-  right: 8px; /* Ajuste fino para que no se desborde */
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: white;
+  align-items: center;
   background-color: #99a4af;
   border: none;
   border-radius: 25%;
-  width: 40px; /* Tamaño más grande para mejor apariencia */
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: white;
   cursor: pointer;
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: bold;
+  height: 40px;
+  justify-content: center;
+  position: absolute;
+  right: 8px; /* Ajuste fino para que no se desborde */
   transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 40px; /* Tamaño más grande para mejor apariencia */
 }
-
 .sign:hover {
   background-color: #0056b3;
   transform: scale(1.1); /* Ligero aumento al pasar el cursor */
@@ -169,122 +198,163 @@ li:hover {
 
 /* Estilos del botón de mostrar habilidades */
 .show-popup {
-  margin-top: 20px;
-  padding: 10px 20px;
   background-color: #28a745;
-  color: white;
   border: none;
   border-radius: 8px;
+  color: white;
   cursor: pointer;
   font-size: 1rem;
+  margin-top: 20px;
+  padding: 10px 20px;
   transition: background-color 0.3s ease;
 }
-
 .show-popup:hover {
   background-color: #218838;
 }
 
 /* Estilos del popup */
-/* Popup */
 .popup-content {
   background: white;
-  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  max-width: 500px;
-  width: 90%;
   max-height: 80vh; /* Limita la altura */
+  max-width: 500px;
   overflow-y: auto; /* Activa el scroll vertical */
+  padding: 20px;
   text-align: left;
+  width: 90%;
 }
-
-.popup-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
 .popup-content li {
   margin-bottom: 10px;
 }
-
-.close-popup {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+.popup-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
+.close-popup {
+  background-color: #dc3545;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
 .close-popup:hover {
   background-color: #c82333;
 }
 
-.saira-semi-condensed-thin {
-  font-family: "Saira Semi Condensed", serif;
-  font-weight: 100;
+/* Tipografías adicionales */
+.instrument-sans {
+  font-family: "Instrument Sans", serif;
+  font-optical-sizing: auto;
   font-style: normal;
-}
-
-.saira-semi-condensed-extralight {
-  font-family: "Saira Semi Condensed", serif;
-  font-weight: 200;
-  font-style: normal;
-}
-
-.saira-semi-condensed-light {
-  font-family: "Saira Semi Condensed", serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.saira-semi-condensed-regular {
-  font-family: "Saira Semi Condensed", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.saira-semi-condensed-medium {
-  font-family: "Saira Semi Condensed", serif;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.saira-semi-condensed-semibold {
-  font-family: "Saira Semi Condensed", serif;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.saira-semi-condensed-bold {
-  font-family: "Saira Semi Condensed", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.saira-semi-condensed-extrabold {
-  font-family: "Saira Semi Condensed", serif;
-  font-weight: 800;
-  font-style: normal;
+  font-variation-settings: "wdth" 100;
 }
 
 .saira-semi-condensed-black {
   font-family: "Saira Semi Condensed", serif;
-  font-weight: 900;
   font-style: normal;
+  font-weight: 900;
+}
+.saira-semi-condensed-bold {
+  font-family: "Saira Semi Condensed", serif;
+  font-style: normal;
+  font-weight: 700;
+}
+.saira-semi-condensed-extrabold {
+  font-family: "Saira Semi Condensed", serif;
+  font-style: normal;
+  font-weight: 800;
+}
+.saira-semi-condensed-extralight {
+  font-family: "Saira Semi Condensed", serif;
+  font-style: normal;
+  font-weight: 200;
+}
+.saira-semi-condensed-light {
+  font-family: "Saira Semi Condensed", serif;
+  font-style: normal;
+  font-weight: 300;
+}
+.saira-semi-condensed-medium {
+  font-family: "Saira Semi Condensed", serif;
+  font-style: normal;
+  font-weight: 500;
+}
+.saira-semi-condensed-regular {
+  font-family: "Saira Semi Condensed", serif;
+  font-style: normal;
+  font-weight: 400;
+}
+.saira-semi-condensed-semibold {
+  font-family: "Saira Semi Condensed", serif;
+  font-style: normal;
+  font-weight: 600;
+}
+.saira-semi-condensed-thin {
+  font-family: "Saira Semi Condensed", serif;
+  font-style: normal;
+  font-weight: 100;
 }
 
+/* Botones de acciones (editar/eliminar) */
+.action-btn {
+  align-items: center;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  font-size: 0.9rem; /* Tamaño más pequeño */
+  font-weight: bold;
+  height: 30px;
+  justify-content: center;
+  position: absolute;
+  top: 50%; /* Centra verticalmente */
+  transform: translateY(-50%); /* Ajuste fino para centrado */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 30px;
+}
+.action-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-50%) scale(1.1); /* Efecto de hover */
+}
 
-.instrument-sans{
-  font-family: "Instrument Sans", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+/* Ajuste del botón de edición y eliminación */
+.action-btn.delete {
+  background-color: #6c757d; /* Fondo gris */
+  color: white;
+  font-size: 1rem; /* Tamaño más grande */
+  font-weight: bold;
+  padding: 0;
+  right: 10px; /* Posición del botón de eliminación */
+}
+.action-btn.delete:hover {
+  background-color: #5a6268;
+  transform: translateY(-50%) scale(1.1);
+}
+.action-btn.edit {
+  background-color: #6c757d;
+  padding: 0; /* Sin relleno adicional */
+  right: 50px; /* Posición del botón de edición */
+}
+.action-btn.edit:hover {
+  background-color: #6c757d;
+  transform: translateY(-50%) scale(1.1);
+}
+.action-btn.edit img {
+  display: block; /* Asegura el centrado del SVG */
+  margin: auto;
+}
+
+svg path {
+  fill: white;
 }
 
 select.round {
@@ -296,78 +366,145 @@ select.round {
     calc(100% - 20px) calc(1em + 2px),
     calc(100% - 15px) calc(1em + 2px),
     calc(100% - .5em) .5em;
+  background-repeat: no-repeat;
   background-size:
     5px 5px,
     5px 5px,
     1.5em 1.5em;
-  background-repeat: no-repeat;
 }
 
-/* Botones de acciones (editar/eliminar) */
-.action-btn {
-  position: absolute;
-  top: 50%; /* Centra verticalmente */
-  transform: translateY(-50%); /* Ajuste fino para centrado */
-  font-size: 0.9rem; /* Tamaño más pequeño */
-  font-weight: bold;
+/* Dropdown compacto para niveles */
+.select-level {
+  width: 20%; /* Tamaño automático según el contenido */
+  padding: 15px; /* Ajuste del relleno interno */
+  font-size: 0.9rem; /* Tamaño del texto compacto */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.select-level:focus {
+  border-color: #9748b3;
+}
+
+.container .add-question-btn {
+  position: absolute; /* Fijo respecto al contenedor */
+  
+ 
+  transform: translateX(-50%); /* Ajuste para centrar completamente */
+  width: 60px; /* Tamaño del botón */
+  height: 60px;
+  background-color: #9748b3; /* Azul fuerte */
   color: white;
-  background-color: #007BFF;
   border: none;
+  border-radius: 50%; /* Botón circular */
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.container .add-question-btn:hover {
+  background-color:  #5f2c72; /* Azul más oscuro en hover */
+  transform: translateX(-50%) scale(1.1); /* Aumento al pasar el cursor */
+}
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.bullets {
+  display: flex;
+  gap: 5px;
+}
+
+.bullet {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  background-color: #ccc;
+  transition: background-color 0.3s;
+}
+
+.bullet.active {
+  background-color: #007bff;
+}
+
+.info-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.info-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.nav-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d6d6d6; /* Gris claro */
+  color: #333; /* Texto oscuro */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.action-btn:hover {
-  background-color: #0056b3;
-  transform: translateY(-50%) scale(1.1); /* Efecto de hover */
+.nav-btn:hover {
+  background-color: #b0b0b0; /* Gris más oscuro en hover */
+  transform: scale(1.1); /* Efecto de aumento */
 }
 
-/* Ajuste del botón de edición y eliminación */
-.action-btn.edit {
-  right: 50px; /* Posición del botón de edición */
+.nav-btn:disabled {
+  background-color: #f0f0f0; /* Gris claro para deshabilitado */
+  color: #aaa; /* Texto gris deshabilitado */
+  cursor: not-allowed;
 }
 
-.action-btn.delete {
-  right: 10px; /* Posición del botón de eliminación */
+.bullets {
+  display: flex;
+  gap: 5px;
 }
 
-/* Botón de eliminación */
-.action-btn.delete {
-  right: 10px;
-  background-color: #6c757d; /* Fondo gris */
-  color: white;
-  font-size: 1rem; /* Tamaño más grande */
-  font-weight: bold;
-  padding: 0;
+.bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  transition: background-color 0.3s;
 }
 
-.action-btn.delete:hover {
-  background-color: #5a6268;
-  transform: translateY(-50%) scale(1.1);
+.bullet.active {
+  background-color: #007bff; /* Azul para la posición activa */
 }
 
-/* Botón de edición con SVG */
-.action-btn.edit {
-  right: 50px;
-  background-color: #6c757d; 
-  padding: 0; /* Sin relleno adicional */
+.option {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre texto e ícono */
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.action-btn.edit img {
-  display: block; /* Asegura el centrado del SVG */
-  margin: auto;
-}
-
-.action-btn.edit:hover {
-  background-color: #6c757d; 
-  transform: translateY(-50%) scale(1.1);
-}
-svg path {
-  fill: white; 
+.option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
