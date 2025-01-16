@@ -109,7 +109,7 @@ input, select {
   padding: 10px;
   transition: border-color 0.2s;
   width: 100%;
-  -webkit-appearance: none;
+ 
 }
 input:focus, select:focus {
   border-color: #13457b;
@@ -508,3 +508,275 @@ select.round {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.container .import-question-btn {
+  position: absolute; /* Fijo respecto al contenedor */
+  bottom: 100px; /* Separación del borde inferior */
+  left: 50%; /* Centrado horizontal */
+  transform: translateX(-50%); /* Ajuste para centrar completamente */
+  width: 60px; /* Tamaño del botón */
+  height: 60px;
+  background-color: #9748b3; /* Azul fuerte (igual que añadir pregunta) */
+  color: white;
+  border: none;
+  border-radius: 50%; /* Botón circular */
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.container .import-question-btn:hover {
+  background-color: #5f2c72; /* Azul más oscuro en hover */
+  transform: translateX(-50%) scale(1.1); /* Aumento al pasar el cursor */
+}
+
+/* Botón de subir */
+.upload-btn {
+  position: absolute;
+  bottom: -10px;
+  right: 10px;
+  background: #007bff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.upload-btn:hover {
+  transform: scale(1.1);
+  background: #0056b3;
+}
+
+.upload-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.popup-content input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.close-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #a71d2a;
+}
+
+/* Popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Botón de seleccionar archivo */
+.file-select-btn {
+  background: #007bff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.file-select-btn:hover {
+  background: #0056b3;
+  transform: scale(1.1);
+}
+
+.file-select-btn .icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* Botón de cerrar */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.close-btn:hover {
+  transform: scale(1.2);
+  color: #000;
+}
+
+/* Oculta el estilo predeterminado */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 2px solid #9748b3; /* Borde inicial */
+  border-radius: 50%; /* Forma circular */
+  width: 20px;
+  height: 20px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  margin-right: 10px;
+  background-color: white; /* Fondo blanco inicial */
+  transition: all 0.2s ease;
+}
+
+/* Cuando está seleccionado */
+input[type="radio"]:checked {
+  background-color: #9748b3; /* Fondo al seleccionar */
+  border-color: #9748b3; /* Cambia el color del borde */
+}
+
+/* Efecto al pasar el cursor */
+input[type="radio"]:hover {
+  border-color: #6d3990; /* Borde al pasar el cursor */
+  box-shadow: 0 0 5px rgba(151, 72, 179, 0.5); /* Sombra */
+}
+
+label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  gap: 10px;
+  cursor: pointer;
+}
+.finish-btn {
+  background-color: #9748b3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.finish-btn:hover {
+  background-color: #6d3990;
+}
+
+.app-container {
+    min-height: 100vh;
+    background-color: #f4f4f9; /* Fondo base */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Asegura que los elementos principales estén distribuidos */
+}
+
+.floating-logo {
+  position: fixed;
+  max-width: 300px;
+  transition: all 0.5s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.floating-logo.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.floating-logo.top-right {
+  top: 10px;
+  right: 10px;
+  left: auto;
+  transform: none;
+  opacity: 0.8;
+  max-width: 100px;
+}
+
+
+
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: #ffffff;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    z-index: 1000;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+

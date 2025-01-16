@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../index.css"; // Importa estilos globales
+import uploadIcon from "../../assets/upload.png";
 
 const QuestionsManager = ({ onSave }) => {
     const [question, setQuestion] = useState("");
@@ -12,8 +13,8 @@ const QuestionsManager = ({ onSave }) => {
     const [skills, setSkills] = useState([]);
     const [skill, setSkill] = useState("");
     const [subSkill, setSubSkill] = useState("");
+    const [showPopup, setShowPopup] = useState(false);
 
-    // Cargar habilidades y subhabilidades desde el backend
     useEffect(() => {
         fetch("http://localhost:3000/api/skills-with-subskills")
             .then((res) => res.json())
@@ -27,10 +28,71 @@ const QuestionsManager = ({ onSave }) => {
         setOptions(updatedOptions);
     };
 
+    const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        if (!file) {
+            alert("No se seleccionó ningún archivo.");
+            return;
+        }
+
+        const validExtensions = [".json", ".quizapp"];
+        const fileExtension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
+        if (!validExtensions.includes(fileExtension)) {
+            alert("El archivo debe ser un .json o .quizapp.");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedQuestions = JSON.parse(e.target.result);
+
+                if (!Array.isArray(importedQuestions)) {
+                    alert("El archivo no tiene el formato esperado.");
+                    return;
+                }
+
+                const validQuestions = importedQuestions.map((q) => {
+                    const matchedSkill = skills.find((s) => s.name === q.skillName);
+                    const matchedSubSkill = matchedSkill?.subskills.find(
+                        (sub) => sub.name === q.subSkillName
+                    );
+
+                    if (!matchedSkill || !matchedSubSkill) {
+                        console.warn(
+                            `Pregunta con habilidad/subhabilidad no válida: "${q.skillName}" / "${q.subSkillName}".`
+                        );
+                        return null;
+                    }
+
+                    return {
+                        ...q,
+                        skillId: matchedSkill.id,
+                        subSkillId: matchedSubSkill.id,
+                        skillName: matchedSkill.name,
+                        subSkillName: matchedSubSkill.name,
+                    };
+                }).filter(Boolean);
+
+                if (validQuestions.length === 0) {
+                    alert("No se pudieron importar preguntas válidas.");
+                    return;
+                }
+
+                onSave(validQuestions);
+                alert(`Se importaron ${validQuestions.length} preguntas correctamente.`);
+            } catch (error) {
+                console.error("Error al importar preguntas:", error);
+                alert("El archivo no es válido.");
+            }
+        };
+
+        reader.readAsText(file);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Validaciones
         if (!question.trim()) {
             alert("La pregunta principal no puede estar vacía.");
             return;
@@ -53,22 +115,19 @@ const QuestionsManager = ({ onSave }) => {
             return;
         }
 
-        // Crear la pregunta
         const newQuestion = {
             question,
             options,
-            skill: skill, // ID de habilidad
-            subSkill: subSkill, // ID de subhabilidad
-            skillName: skills.find((s) => s.id === parseInt(skill))?.name, // Nombre de habilidad
+            skill,
+            subSkill,
+            skillName: skills.find((s) => s.id === parseInt(skill))?.name,
             subSkillName: skills
                 .find((s) => s.id === parseInt(skill))
-                ?.subskills.find((sub) => sub.id === parseInt(subSkill))?.name // Nombre de subhabilidad
+                ?.subskills.find((sub) => sub.id === parseInt(subSkill))?.name
         };
 
-        // Guardar la pregunta en el estado global usando onSave
         onSave(newQuestion);
 
-        // Reiniciar los campos
         setQuestion("");
         setOptions([
             { text: "", level: "" },
@@ -83,8 +142,7 @@ const QuestionsManager = ({ onSave }) => {
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
-                {/* Pregunta principal */}
-                <div className="field-wrapper">
+                <div className="field-wrapper" style={{ position: "relative" }}>
                     <textarea
                         className="field"
                         placeholder="Escribe la pregunta principal..."
@@ -93,9 +151,19 @@ const QuestionsManager = ({ onSave }) => {
                         rows="3"
                         required
                     />
+                    <button
+                        type="button"
+                        className="upload-btn"
+                        onClick={() => setShowPopup(true)}
+                    >
+                        <img
+                            src={uploadIcon}
+                            alt="Seleccionar archivo"
+                            className="icon"
+                        />
+                    </button>
                 </div>
 
-                {/* Habilidad */}
                 <div className="field-wrapper">
                     <select
                         className="field"
@@ -112,7 +180,6 @@ const QuestionsManager = ({ onSave }) => {
                     </select>
                 </div>
 
-                {/* Subhabilidad */}
                 {skill && (
                     <div className="field-wrapper">
                         <select
@@ -133,8 +200,7 @@ const QuestionsManager = ({ onSave }) => {
                     </div>
                 )}
 
-                {/* Opciones */}
-                <h2>Opciones</h2>
+                <h3>Respuestas</h3>
                 {options.map((option, index) => (
                     <div key={index} className="field-wrapper">
                         <input
@@ -167,11 +233,40 @@ const QuestionsManager = ({ onSave }) => {
                     </div>
                 ))}
 
-                {/* Botón para guardar */}
                 <button className="add-question-btn" type="submit">
                     +
                 </button>
             </form>
+
+            {showPopup && (
+                <div className="popup">
+                    <div className="popup-content">
+                        <h3>Cargar preguntas</h3>
+
+                        <label htmlFor="file-input" className="file-select-btn">
+                            <img
+                                src={uploadIcon}
+                                alt="Seleccionar archivo"
+                                className="icon"
+                            />
+                        </label>
+                        <input
+                            id="file-input"
+                            type="file"
+                            accept=".json"
+                            onChange={(e) => handleFileUpload(e)}
+                            style={{ display: "none" }}
+                        />
+
+                        <button
+                            className="close-btn"
+                            onClick={() => setShowPopup(false)}
+                        >
+                            ✖
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
