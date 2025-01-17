@@ -1,5 +1,6 @@
 import React from "react";
 import "./CustomModal.css"; // Agrega los estilos que veremos más abajo
+import logo from "../assets/logo_qz.svg";
 
 const CustomModal = ({ isOpen, onClose, content }) => {
     if (!isOpen) return null;
@@ -7,7 +8,12 @@ const CustomModal = ({ isOpen, onClose, content }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <h2>SkillEv</h2>
+                
+                <img
+                                src={logo}
+                                alt="Logo"
+                                className={`logo_modal`}
+                            />
                 <pre>{content}</pre>
                 <button className="modal-close-btn" onClick={onClose}>
                     Cerrar

@@ -53,3 +53,9 @@
 .modal-close-btn:hover {
     background-color: #6d3990;
 }
+
+.logo_modal{
+    fill-opacity: 10;
+    width: 100px;
+    
+  }

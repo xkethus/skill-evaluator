@@ -4,7 +4,7 @@ import SkillsManager from "./SkillsManagerApp";
 import QuestionsPage from "./QuestionsPage";
 import QuestionViewer from "./QuestionsViewer";
 import QuestionTester from "./components/questions/QuestionsTester";
-import Viz from "./components/visualizations/Viz";
+import Viz from "./components/visualizations/viz";
 import logo from "./assets/logo_qz.svg";
 
 function App() {
@@ -25,25 +25,15 @@ function App() {
     };
 
     return (
-        <div style={{ paddingBottom: "80px", position: "relative", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-
-            {location.pathname === "/" && (
-                <img
-                    src={logo}
-                    alt="Logo"
-                    style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        maxWidth: "300px",
-                        opacity: 0.5,
-                        zIndex: 0,
-                    }}
-                />
-            )}
+        <div style={{ paddingBottom: "80px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            {/* Logo flotante */}
+            <img
+                src={logo}
+                alt="Logo"
+                className={`floating-logo ${location.pathname === "/" ? "center" : "top-left"}`}
+            />
             <Routes>
-                <Route path="/" element={<h1>Bienvenido a la App</h1>} />
+                <Route path="/" element={<div></div>} />
                 <Route path="/skills" element={<SkillsManager />} />
                 <Route path="/questions" element={<QuestionsPage onSave={handleSaveQuestion} />} />
                 <Route path="/viewer" element={<QuestionViewer questions={questions} onDelete={handleDelete} />} />
